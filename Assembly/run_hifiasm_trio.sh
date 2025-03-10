@@ -13,7 +13,7 @@
 ccs=/path_to_data/sandai_ccs/*fa
 ont=/path_to_data/pass.fq.gz
 
-export PATH=/biosoft/hifiasm-0.24.0:$PATH
+export PATH=/biosoft/hifiasm-0.19.8:$PATH
 
 yak count -k31 -b37 -t16 -o pat.yak paternal.fq.gz
 yak count -k31 -b37 -t16 -o mat.yak maternal.fq.gz
