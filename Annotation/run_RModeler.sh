@@ -12,7 +12,7 @@
 REF=/path_to_data/Percocypris_pingi.genomic.fna
 db=PPI_db
 prefix=Percocypris_pingi
-export PATH=/home/bio_soft/RM/RepeatModeler-2.0.3:$PATH
+export PATH=/biosoft/RepeatModeler-2.0.3:$PATH
 export BLAST_USAGE_REPORT=false
 
 mkdir $db
