@@ -9,11 +9,9 @@
 #SBATCH --output=job-%j.out
 #SBATCH --error=job-%j.err
 
-# define your data
 infile=/path_to_data/Percocypris_pingi.genomic.longest.faa
 prefix=Percocypris_pingi
 
-# path to software
 sprot_db=/path_to_database/uniprot_sprot_20231108
 trembl_db=/path_to_database/uniprot_trembl_20231108
 nr_db=/path_to_database/nr_20230728
