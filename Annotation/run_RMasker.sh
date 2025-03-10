@@ -13,7 +13,7 @@ REF=/path_to_data/Percocypris_pingi.genomic.fna
 repeate_lib=/path_to_data/Percocypris_pingi.RM.lib
 prefix=Percocypris_pingi
 
-export PATH=/home/bio_soft/RM/RepeatMasker-4.1.2-p1:$PATH
+export PATH=/biosoft/RepeatMasker-4.1.2-p1:$PATH
 export BLAST_USAGE_REPORT=false
 
 RepeatMasker -pa 4 -gff -a -xsmall -gccalc -dir ${prefix}_RM.output -lib $repeate_lib $REF
