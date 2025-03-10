@@ -1,7 +1,6 @@
 import sys, os, re
 import argparse
 
-
 def read_ref_gtf(ref_gtf):
     gene_trans = {}
     trans_exon = {}
@@ -22,7 +21,6 @@ def read_ref_gtf(ref_gtf):
                 trans_exon[tid].append(line.strip())
 
     return gene_trans, trans_exon
-
 
 def get_trans(mydict):
     t_length = {}
