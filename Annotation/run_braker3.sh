@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=20
 #SBATCH --mem=64G
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=wanghyx666@126.com
+#SBATCH --mail-user=wanghyx666@163.com
 #SBATCH --output=job-%j.out
 #SBATCH --error=job-%j.err
 
