@@ -22,4 +22,6 @@ There are the scripts for haploid genome anslysis of three snow trouts: *Schizot
 
 ## Data availability:
 
-The assemblies and raw sequencing data are available in National Genomics Data Center ([NGDC](https://ngdc.cncb.ac.cn)) with BioProject ID PPRJCA029383, PRJCA031501; and in National Center for Biotechnology Information ([NCBI](https://www.ncbi.nlm.nih.gov/))  with BioProject ID
+The assemblies and raw sequencing data are available in National Genomics Data Center ([NGDC](https://ngdc.cncb.ac.cn)) with BioProject ID: PPRJCA029383, PRJCA031501; and in National Center for Biotechnology Information ([NCBI](https://www.ncbi.nlm.nih.gov/))  with BioProject ID: PRJNA1124429, PRJNA1158336.
+Genome resequencing data of male and female populations of four fish are available in .
+
