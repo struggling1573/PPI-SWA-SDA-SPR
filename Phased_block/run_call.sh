@@ -49,21 +49,4 @@ cut -d$'\t' -f1 ${REF}.fai | parallel -j 10 'gatk --java-options -Xmx12G Genotyp
 # VcftoolsFilter
 cut -d$'\t' -f1 ${REF}.fai | parallel -j 10 'gatk --java-options -Xmx12G VariantFiltration --tmp-dir /tmp --reference Percocypris_pingi_hap2.genomic.fna -V pb/vcf/{}.genotype.vcf -O pb/vcf_filtered/{}.filtered.vcf --filter-expression "QD < 2.0 || MQ < 40.0 || FS > 60.0 || SOR > 3.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" --filter-name "Filter"'
 
-############################################################################################################
-###                                             whatshap phasing                                         ###
-############################################################################################################
-[ -d pb/vcf_phased/ ] || mkdir -p pb/vcf_phased
-source /home1/miniconda/etc/profile.d/conda.sh
-conda activate whatshap
-cut -d$'\t' -f1 ${REF}.fai | parallel -j 10 'whatshap polyphase pb/vcf_filtered/{}.filtered.vcf pb/split/{}.rmdup.bam --ploidy 4 --reference Percocypris_pingi_hap2.genomic.fna -o pb/vcf_phased/{}.phased.vcf'
-
-# MergeVcfs(combine all chromosomes)
-gatk  --java-options -Xmx12G MergeVcfs $(for i in `cut -d$'\t' -f1 ${REF}.fai`; do echo "-I pb/vcf_phased/${i}.phased.vcf" ;done) -O variant.phased.vcf
-
-bgzip variant.phased.vcf
-tabix variant.phased.vcf.gz
-#bcftools consensus -H 1 -f Percocypris_pingi_hap2.genomic.fna variant.phased.vcf.gz > haplotype1.fasta&
-#bcftools consensus -H 2 -f Percocypris_pingi_hap2.genomic.fna variant.phased.vcf.gz > haplotype2.fasta&
-#bcftools consensus -H 3 -f Percocypris_pingi_hap2.genomic.fna variant.phased.vcf.gz > haplotype3.fasta&
-#bcftools consensus -H 4 -f Percocypris_pingi_hap2.genomic.fna variant.phased.vcf.gz > haplotype4.fasta&
 
