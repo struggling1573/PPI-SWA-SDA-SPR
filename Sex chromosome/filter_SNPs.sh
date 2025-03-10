@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=CombineGVCFs
+#SBATCH --job-name=filterSNPs
 #SBATCH --partition=cpu
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=101G
