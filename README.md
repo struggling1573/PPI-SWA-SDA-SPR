@@ -1,6 +1,6 @@
 # PPI-SWA-SDA-SPR
 
-There are the scripts for haploid genome anslysis of three snow trouts: *Schizothorax davidi*, *S. prenanti* and *S. wangchiachii* and *Percocypris pingi*  
+There are the scripts for haploid genome anslysis of three snow carp: *Schizothorax davidi*, *S. prenanti* and *S. wangchiachii* and *Percocypris pingi*  
 
 ## Description for each directory:
 - The [Genome survey](https://github.com/struggling1573/PPI-SWA-SDA-SPR/tree/main/Genome%20survey) directory contains codes for genome size, heterozygosity and ploidy assessment.
