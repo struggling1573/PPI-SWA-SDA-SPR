@@ -37,7 +37,7 @@ library(tidyr)
 data <- read.table(input, header = T)
 data_long <- data %>%
   gather(key = "Type", value = "Value", -CHR)
-data_filtered <- data_long %>% filter(.[[2]]!= "AlleNumber" & .[[2]]!= "Orther")
+data_filtered <- data_long %>% filter(.[[2]]!= "AlleNumber" & .[[2]]!= "Orthe")
 data_filtered <- data_filtered %>%
   group_by(CHR) %>%
   mutate(Percentage = Value / sum(Value) * 100)
