@@ -37,14 +37,14 @@ library(tidyr)
 data <- read.table(input, header = T)
 data_long <- data %>%
   gather(key = "Type", value = "Value", -CHR)
-data_filtered <- data_long %>% filter(.[[2]]!= "AlleNumber" & .[[2]]!= "Orthe")
+data_filtered <- data_long %>% filter(.[[2]]!= "AlleNumber" & .[[2]]!= "Other")
 data_filtered <- data_filtered %>%
   group_by(CHR) %>%
   mutate(Percentage = Value / sum(Value) * 100)
 plot_title <- paste("Genotypic statistics in ", sample, sep = "")
 ggplot(data_filtered, aes(x=CHR, y=Percentage, fill=Type)) +
   geom_bar(stat="identity") +
-  scale_fill_manual(values=c("Hexasomic"="#289584", "Tetrasomic"="#ccb280", "Disomic"="#3d3a6b", "NoAlle"="#65b961", "Others"="#faebd7")) +
+  scale_fill_manual(values=c("Hexasomic"="#289584", "Tetrasomic"="#ccb280", "Disomic"="#3d3a6b", "NoAlle"="#65b961", "Other"="#faebd7")) +
   labs(y="Proportion(%)", x="", title = plot_title, fill="Type") +
   theme_minimal() +
   theme(
