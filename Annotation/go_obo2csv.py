@@ -23,7 +23,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Parse the go-basic.obo file and write the results to the output file.',
         formatter_class=argparse.RawTextHelpFormatter,
-        epilog="Author: Hangyu Wang\nDate: Jan 24 2024\nUnit: Southwest University\nContact: wanghyx666@163.com"
+        epilog="Author: Hangyu Wang\nDate: Jan 04 2024\nUnit: Southwest University\nContact: wanghyx666@163.com"
     )
     parser.add_argument('input_file', type=str, help='Path to the input go-basic.obo file')
     parser.add_argument('output_file', type=str, help='Path to the output file')
