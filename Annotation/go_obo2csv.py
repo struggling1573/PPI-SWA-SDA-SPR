@@ -1,34 +1,33 @@
-import re
+import argparse
+import obonet
+import pandas as pd
+
 
 def parse_go_basic_obo(input_file):
-    go_ids = []
-    go_names = []
-    go_classes = []
-    with open(input_file, 'r', encoding='utf-8') as f:
-        for line in f:
-            if line.startswith('id:'):
-                go_id = line.strip().split(' ')[1]
-                go_ids.append(go_id)
-            elif line.startswith('name:'):
-                go_name = line.strip().replace('name:', '').strip()
-                go_name = ' '.join([word.capitalize() for word in go_name.split(' ')])
-                go_names.append(go_name)
-            elif line.startswith('namespace:'):
-                go_class = line.strip().split(' ')[1]
-                go_class = go_class.replace('_', ' ')
-                go_classes.append(go_class)
-
-    return go_ids, go_names, go_classes
+    go_data = []
+    graph = obonet.read_obo(input_file)
+    for node, data in graph.nodes(data=True):
+        go_id = node
+        go_name = ' '.join(word.capitalize() for word in data.get('name', '').split())
+        go_class = data.get('namespace', '').replace('_', ' ')
+        go_data.append([go_id, go_name, go_class])
+    return go_data
 
 
-def write_to_output(go_ids, go_names, go_classes, output_file):
-    with open(output_file, 'w', encoding='utf-8') as f:
-        for go_id, go_name, go_class in zip(go_ids, go_names, go_classes):
-            f.write(f"{go_id}\t{go_name}\t{go_class}\n")
+def write_to_output(go_data, output_file):
+    df = pd.DataFrame(go_data, columns=['GO ID', 'GO Name', 'GO Class'])
+    df.to_csv(output_file, sep='\t', na_rep='nan', index=False)
 
 
 if __name__ == "__main__":
-    input_file = "go-basic.obo"
-    output_file = "GO.library"
-    go_ids, go_names, go_classes = parse_go_basic_obo(input_file)
-    write_to_output(go_ids, go_names, go_classes, output_file)
+    parser = argparse.ArgumentParser(
+        description='Parse the go-basic.obo file and write the results to the output file.',
+        formatter_class=argparse.RawTextHelpFormatter,
+        epilog="Author: Hangyu Wang\nDate: Jan 24 2024\nUnit: Southwest University\nContact: wanghyx666@163.com"
+    )
+    parser.add_argument('input_file', type=str, help='Path to the input go-basic.obo file')
+    parser.add_argument('output_file', type=str, help='Path to the output file')
+    args = parser.parse_args()
+
+    go_data = parse_go_basic_obo(args.input_file)
+    write_to_output(go_data, args.output_file)
