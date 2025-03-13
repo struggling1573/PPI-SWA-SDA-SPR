@@ -3,15 +3,14 @@ import os
 import re
 import glob
 
+
 def parse_busco_file(file_path):
     filename = os.path.basename(file_path)
     if 'result_' not in filename:
         return None
     species = filename.split('result_')[1].split('.')[0]
-
     with open(file_path, 'r') as f:
         lines = [line.strip() for line in f.readlines()]
-
     result_line = None
     for line in lines:
         if line.startswith('C:'):
@@ -20,7 +19,6 @@ def parse_busco_file(file_path):
     if not result_line:
         print(f"Warning: Result line not found in {file_path}")
         return None
-
     c_match = re.search(r'C:([\d.]+)%\[S:([\d.]+)%,D:([\d.]+)%\]', result_line)
     f_match = re.search(r'F:([\d.]+)%', result_line)
     m_match = re.search(r'M:([\d.]+)%', result_line)
@@ -29,8 +27,6 @@ def parse_busco_file(file_path):
     if not all([c_match, f_match, m_match, n_match]):
         print(f"Warning: Failed to parse percentages in {file_path}")
         return None
-
-    # 处理百分比
     try:
         percent_C = "{:.2f}%".format(float(c_match.group(1)))
         percent_S = "{:.2f}%".format(float(c_match.group(2)))
@@ -41,8 +37,7 @@ def parse_busco_file(file_path):
     except ValueError:
         print(f"Warning: Invalid numeric format in {file_path}")
         return None
-
-    # 解析计数
+        
     counts = {'C': None, 'S': None, 'D': None, 'F': None, 'M': None}
     patterns = {
         'C': r'^\s*(\d+)\s+Complete BUSCOs \(C\)',
@@ -81,8 +76,18 @@ def parse_busco_file(file_path):
         'count_total': count_total
     }
 
+
 def main():
-    parser = argparse.ArgumentParser(description='Parse BUSCO results into a summary table')
+    author_info = """
+Author: Haoyu Wang
+Date: Dec 30  2024
+Affiliation: Southwest University
+Contact: wanghyx666@163.com
+    """
+    parser = argparse.ArgumentParser(
+        description='Parse BUSCO results into a summary table',
+        epilog=author_info
+    )
     parser.add_argument('-datapath', required=True, help='Directory containing BUSCO result files')
     parser.add_argument('-output', default='busco_summary.tsv', help='Output TSV file name')
     args = parser.parse_args()
@@ -126,5 +131,7 @@ def main():
 
     print(f"Successfully wrote {len(results)} records to {args.output}")
 
+
 if __name__ == '__main__':
     main()
+    
