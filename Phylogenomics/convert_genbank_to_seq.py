@@ -1,25 +1,47 @@
-import argparse
+import sys
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
+USAGE = f"""
+Usage: python %s genbank out.CDS.fasta out.pep.fasta
+
+This script is used to extract CDS and protein sequences from a GenBank file using /product as primary ID.
+
+Arguments:
+  genbank         Path to the input GenBank file.
+  out.CDS.fasta   Path to the output file for CDS sequences in FASTA format.
+  out.pep.fasta   Path to the output file for protein sequences in FASTA format.
+
+Example:
+  python %s LY_10A.gb LY_10A.gb.CDS.fasta LY_10A.gb.pep.fasta
+
+To show this help message, use the -h option:
+  python %s -h
+
+Author: Haoyu Wang
+Date: Mar 13  2025
+Affiliation: Southwest University
+Contact: wanghyx666@163.com
+""" % (sys.argv[0], sys.argv[0], sys.argv[0])
+
 def main():
-    parser = argparse.ArgumentParser(
-        description='Extract CDS and protein sequences from GenBank file using /product as primary ID',
-        epilog='Author: Haoyu Wang\nDate: Dec 30 2024\nAffiliation: Southwest University\nContact: wanghyx666@163.com',
-        formatter_class=argparse.RawTextHelpFormatter
-    )
-    # 定义位置参数
-    parser.add_argument('input', help='Input GenBank file path')
-    parser.add_argument('cds_output', help='Output FASTA file for CDS sequences')
-    parser.add_argument('protein_output', help='Output FASTA file for protein sequences')
-    
-    args = parser.parse_args()
+    if '-h' in sys.argv:
+        print(USAGE)
+        sys.exit(0)
+
+    if len(sys.argv) != 4:
+        print(USAGE)
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+    cds_output = sys.argv[2]
+    protein_output = sys.argv[3]
 
     cds_records = []
     protein_records = []
 
-    for record in SeqIO.parse(args.input, "genbank"):
+    for record in SeqIO.parse(input_file, "genbank"):
         for feature in record.features:
             if feature.type == "CDS":
                 identifiers = [
@@ -40,8 +62,8 @@ def main():
                     protein_seq = Seq(feature.qualifiers['translation'][0])
                     protein_records.append(SeqRecord(protein_seq, id=feature_id, description=""))
 
-    SeqIO.write(cds_records, args.cds_output, "fasta")
-    SeqIO.write(protein_records, args.protein_output, "fasta")
+    SeqIO.write(cds_records, cds_output, "fasta")
+    SeqIO.write(protein_records, protein_output, "fasta")
 
 if __name__ == "__main__":
     main()
