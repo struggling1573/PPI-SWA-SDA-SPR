@@ -45,3 +45,13 @@ seq -w 1 25 | parallel -j 10 "mafToPsl ${ref_spe} ${query_spe} LastzIdentity/04.
 
 # Calculate web blat score from psl files
 seq -w 1 25 | parallel -j 10 "pslScore LastzIdentity/05.out_psl/chr{}.psl > LastzIdentity/06.out_score/chr{}.score"
+
+# filter
+mkdir LastzIdentity/07.filter && cd LastzIdentity/07.filter
+seq -w 1 25 | parallel -j 10 "awk '\$5>60 && \$6>55 && \$6<100 {a[\$1\"_\"\$2]=3} END { while (getline < \"../05.out_psl/chr{}.psl\") { if (a[\$14\"_\"\$16]==3) { print \$0 } } }' ../06.out_score/chr{}.score > chr{}.score.ide99.filt"
+seq -w 1 25 | parallel -j 10 "python psl2sim.py chr{}.score.ide99.filt 50000 chr{}_query.txt chr{}_ref.txt"
+cat chr*_query.txt > df_SDA_hap2_vs_hap1.iden_query.txt 
+cat chr*_ref.txt > df_SDA_hap2_vs_hap1.iden_ref.txt 
+
+# plot
+
