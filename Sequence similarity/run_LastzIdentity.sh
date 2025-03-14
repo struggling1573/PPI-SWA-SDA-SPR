@@ -17,7 +17,8 @@ query_spe=hap2
 # Path to software
 source /biosoft/miniconda/etc/profile.d/conda.sh
 conda activate last
-PATH=/biosoft/GenomeAlignmentTools_v1.0/kent/bin:$PATH
+export PATH=/biosoft/ucsc:$PATH
+export PATH=/biosoft/GenomeAlignmentTools_v1.0/kent/bin:$PATH
 
 [ -d LastzIdentity/01.out_axt/ ] || mkdir -p LastzIdentity/01.out_axt
 [ -d LastzIdentity/02.out_chain/ ] || mkdir -p LastzIdentity/02.out_chain
