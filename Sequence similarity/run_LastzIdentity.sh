@@ -25,6 +25,7 @@ PATH=/biosoft/GenomeAlignmentTools_v1.0/kent/bin:$PATH
 [ -d LastzIdentity/04.out_maf/ ] || mkdir -p LastzIdentity/04.out_maf
 [ -d LastzIdentity/05.out_psl/ ] || mkdir -p LastzIdentity/05.out_psl
 [ -d LastzIdentity/06.out_score/ ] || mkdir -p LastzIdentity/06.out_score
+[ -d LastzIdentity/07.filter/ ] || mkdir -p LastzIdentity/07.filter
 
 # Run lastz
 seq -w 1 25 | parallel -j 10 "lastz $ref_spe/chr{}.fna $query_spe/chr{}.fna K=4500 L=3000 Y=15000 O=600 E=150 H=2000 T=2 --format=axt > LastzIdentity/01.out_axt/chr{}.axt"
@@ -47,7 +48,7 @@ seq -w 1 25 | parallel -j 10 "mafToPsl ${ref_spe} ${query_spe} LastzIdentity/04.
 seq -w 1 25 | parallel -j 10 "pslScore LastzIdentity/05.out_psl/chr{}.psl > LastzIdentity/06.out_score/chr{}.score"
 
 # filter
-mkdir LastzIdentity/07.filter && cd LastzIdentity/07.filter
+cd LastzIdentity/07.filter
 seq -w 1 25 | parallel -j 10 "awk '\$5>60 && \$6>55 && \$6<100 {a[\$1\"_\"\$2]=3} END { while (getline < \"../05.out_psl/chr{}.psl\") { if (a[\$14\"_\"\$16]==3) { print \$0 } } }' ../06.out_score/chr{}.score > chr{}.score.ide99.filt"
 seq -w 1 25 | parallel -j 10 "python psl2sim.py chr{}.score.ide99.filt 50000 chr{}_query.txt chr{}_ref.txt"
 cat chr*_query.txt > df_SDA_hap2_vs_hap1.iden_query.txt 
