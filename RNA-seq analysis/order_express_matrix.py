@@ -21,6 +21,8 @@ def main(compare_txt, file_suffix, output_file):
             all_samples.extend(tmp[1].split(','))
             all_samples.extend(tmp[2].split(','))
 
+    all_samples = list(dict.fromkeys(all_samples))
+
     order_df = []
     all_df = glob.glob(f'*_{file_suffix}')
     for sample in all_samples:
@@ -69,3 +71,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args.compare_txt, args.file_suffix, args.output_file)
+    
