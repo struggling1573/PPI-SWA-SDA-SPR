@@ -88,9 +88,12 @@ rownames(average_expression_matrix) <- exp_data_temp2$Gene
 Summarized_data <- SummarizedExperiment(assays = SimpleList(average_expression_matrix),
                                         rowData = row.names(average_expression_matrix),
                                         colData = colnames(average_expression_matrix))
+num_tissues <- ncol(average_expression_matrix)
+print(num_tissues)
+maxNumberOfTissues <- min(num_tissues - 1, 7) 
 GeneRetrieval_output <- teGeneRetrieval(Summarized_data,
                                         foldChangeThreshold = 5,
-                                        maxNumberOfTissues = 7,
+                                        maxNumberOfTissues = maxNumberOfTissues,
                                         expressedGeneThreshold = 1)
 result <- as.data.frame(assay(GeneRetrieval_output))
 write.table(result, output, quote = F, sep = '\t', row.names = F)
