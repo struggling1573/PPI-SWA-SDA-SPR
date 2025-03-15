@@ -1,0 +1,3 @@
+male	ll-1-gl,ll-3-gl,ll-5-gl
+female	ll-2-gl,ll-4-gl,ll-6-gl
+other	pp_bl_1,pp_br_1,pp_fi_1,pp_gi_1,pp_gu_1,pp_he_1,pp_li_1,pp_mu_3,pp_mu_4,pp_sk_1,pp_sp_1,pp_tk_1
